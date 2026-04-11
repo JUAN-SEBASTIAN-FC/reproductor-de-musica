@@ -4,65 +4,11 @@ import { UploadZone } from './components/UploadZone';
 import { SongList } from './components/SongList';
 import { PlayerControls } from './components/PlayerControls';
 import { NowPlayingPanel } from './components/NowPlayingPanel';
-import { SearchIcon, SunIcon, MoonIcon, UserIcon, LockIcon, LogOutIcon } from './utils/Icons';
+import { SearchIcon, SunIcon, MoonIcon } from './utils/Icons';
 import './App.css';
 
-// --- NUEVA VISTA DE LOGIN MOCK ---
-function LoginView({ onLogin }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (username.trim()) {
-      onLogin(username);
-    }
-  };
-
-  return (
-    <div className="login-container">
-      <div className="login-card">
-        <h2>Bienvenido</h2>
-        <p>Inicia sesión para entrar en la música</p>
-        
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <label>Usuario / Email</label>
-            <div className="input-icon"><UserIcon size={18} /></div>
-            <input 
-              type="text" 
-              className="input-field" 
-              placeholder="juan@ejemplo.com"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-              required
-            />
-          </div>
-          
-          <div className="input-group">
-            <label>Contraseña</label>
-            <div className="input-icon"><LockIcon size={18} /></div>
-            <input 
-              type="password" 
-              className="input-field" 
-              placeholder="••••••••"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          
-          <button type="submit" className="btn-primary">
-            Entrar a Aura Stream
-          </button>
-        </form>
-      </div>
-    </div>
-  );
-}
-
-
-function Sidebar({ currentRoute, setCurrentRoute, user, onLogout }) {
+function Sidebar({ currentRoute, setCurrentRoute }) {
   return (
     <aside className="sidebar">
       <div className="brand" onClick={() => setCurrentRoute('home')} style={{cursor: 'pointer'}}>
@@ -76,21 +22,6 @@ function Sidebar({ currentRoute, setCurrentRoute, user, onLogout }) {
           <li className={`menu-item ${currentRoute === 'library' ? 'active' : ''}`} onClick={() => setCurrentRoute('library')}>Mi Biblioteca</li>
           <li className={`menu-item ${currentRoute === 'favorites' ? 'active' : ''}`} onClick={() => setCurrentRoute('favorites')}>Favoritos</li>
         </ul>
-      </div>
-      
-      {/* User Controls */}
-      <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', background: 'var(--bg-main)', borderRadius: 'var(--radius-md)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{width: '28px', height: '28px', borderRadius: '50%', background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 'bold', fontSize: '12px'}}>
-              {user.charAt(0).toUpperCase()}
-            </div>
-            <span style={{ fontSize: '14px', fontWeight: 600, color: 'var(--text-main)', maxWidth: '80px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{user}</span>
-          </div>
-          <button className="with-tooltip" onClick={onLogout} style={{ background: 'transparent', border: 'none', color: 'var(--text-secondary)', cursor: 'pointer' }} data-tooltip="Cerrar sesión">
-             <LogOutIcon size={18} />
-          </button>
-        </div>
       </div>
     </aside>
   );
@@ -136,7 +67,6 @@ function MainApp() {
   const { currentTrack } = useAudioPlayer();
   const [searchKeyword, setSearchKeyword] = useState('');
   const [currentRoute, setCurrentRoute] = useState('home');
-  const [user, setUser] = useState(() => localStorage.getItem('aura_user') || null);
   
   // Theming Logic
   const [theme, setTheme] = useState(() => {
@@ -153,27 +83,11 @@ function MainApp() {
     setTheme(prev => prev === 'dark' ? 'light' : 'dark');
   };
 
-  const handleLogin = (username) => {
-    setUser(username);
-    localStorage.setItem('aura_user', username);
-  };
-  
-  const handleLogout = () => {
-    setUser(null);
-    localStorage.removeItem('aura_user');
-  };
-
-  if (!user) {
-    return <LoginView onLogin={handleLogin} />;
-  }
-
   return (
     <div className="app-container">
       <Sidebar 
         currentRoute={currentRoute} 
         setCurrentRoute={setCurrentRoute} 
-        user={user}
-        onLogout={handleLogout}
       />
 
       <main className="main-content">
