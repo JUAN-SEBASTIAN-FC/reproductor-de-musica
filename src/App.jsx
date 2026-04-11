@@ -4,7 +4,7 @@ import { UploadZone } from './components/UploadZone';
 import { SongList } from './components/SongList';
 import { PlayerControls } from './components/PlayerControls';
 import { NowPlayingPanel } from './components/NowPlayingPanel';
-import { SearchIcon, SunIcon, MoonIcon } from './utils/Icons';
+import { SearchIcon, SunIcon, MoonIcon, HomeIcon, LibraryIcon, MusicIcon, HeartFilledIcon } from './utils/Icons';
 import './App.css';
 
 
@@ -17,10 +17,22 @@ function Sidebar({ currentRoute, setCurrentRoute }) {
       <div style={{ flex: 1 }}>
         <p style={{textAlign: 'center', color: 'var(--text-secondary)', fontSize: '20px', marginBottom: '24px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase'}}>Menú</p>
         <ul className="sidebar-menu">
-          <li className={`menu-item ${currentRoute === 'nowplaying' ? 'active' : ''}`} onClick={() => setCurrentRoute('nowplaying')}>Reproductor</li>
-          <li className={`menu-item ${currentRoute === 'home' ? 'active' : ''}`} onClick={() => setCurrentRoute('home')}>Inicio</li>
-          <li className={`menu-item ${currentRoute === 'library' ? 'active' : ''}`} onClick={() => setCurrentRoute('library')}>Mi Biblioteca</li>
-          <li className={`menu-item ${currentRoute === 'favorites' ? 'active' : ''}`} onClick={() => setCurrentRoute('favorites')}>Favoritos</li>
+          <li className={`menu-item ${currentRoute === 'nowplaying' ? 'active' : ''}`} onClick={() => setCurrentRoute('nowplaying')}>
+            <MusicIcon size={20} />
+            <span>Reproductor</span>
+          </li>
+          <li className={`menu-item ${currentRoute === 'home' ? 'active' : ''}`} onClick={() => setCurrentRoute('home')}>
+            <HomeIcon size={20} />
+            <span>Inicio</span>
+          </li>
+          <li className={`menu-item ${currentRoute === 'library' ? 'active' : ''}`} onClick={() => setCurrentRoute('library')}>
+            <LibraryIcon size={20} />
+            <span>Mi Biblioteca</span>
+          </li>
+          <li className={`menu-item ${currentRoute === 'favorites' ? 'active' : ''}`} onClick={() => setCurrentRoute('favorites')}>
+            <HeartFilledIcon size={20} />
+            <span>Favoritos</span>
+          </li>
         </ul>
       </div>
     </aside>
