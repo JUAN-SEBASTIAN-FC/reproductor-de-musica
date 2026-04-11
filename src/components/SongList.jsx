@@ -75,6 +75,47 @@ const SongCard = ({ track, index, originalIndex, isActive }) => {
 export const SongList = ({ searchKeyword, filterFavorites }) => {
   const { playlist, currentTrackIndex, favorites } = useAudioPlayer();
 
+  const normalizeText = (text) => {
+    if (!text) return "";
+    
+    // Convert mathematical alphanumeric symbols to plain text
+    // Ranges: 0x1D400 (Bold A) to 0x1D7FF (Monospace 9)
+    let plainText = "";
+    for (const char of text) {
+      const cp = char.codePointAt(0);
+      if (cp >= 0x1D400 && cp <= 0x1D7FF) {
+        // This is a rough mapping that covers most Bold, Italic, Script, etc. styles
+        // Most blocks are 52 chars (A-Z, a-z) or 10 digits
+        // We find the index within the blocks of 26 letters.
+        
+        let normalizedCp = cp;
+        
+        // Mathematical Alphanumeric Symbols logic:
+        // Many styles are layered every 52 characters (A-Z = 26, a-z = 26)
+        if (cp >= 0x1D400 && cp <= 0x1D6A3) { // Letters block
+          const offset = (cp - 0x1D400) % 52;
+          if (offset < 26) {
+            normalizedCp = 65 + offset; // A-Z
+          } else {
+            normalizedCp = 97 + (offset - 26); // a-z
+          }
+        } else if (cp >= 0x1D7CE && cp <= 0x1D7FF) { // Digits block
+          const offset = (cp - 0x1D7CE) % 10;
+          normalizedCp = 48 + offset; // 0-9
+        }
+        
+        plainText += String.fromCharCode(normalizedCp);
+      } else {
+        plainText += char;
+      }
+    }
+
+    return plainText
+      .toLowerCase()
+      .normalize("NFKD")
+      .replace(/[\u0300-\u036f]/g, "");
+  };
+
   const filteredPlaylist = useMemo(() => {
     let list = playlist;
     
@@ -85,11 +126,11 @@ export const SongList = ({ searchKeyword, filterFavorites }) => {
     
     // Filtro por texto
     if (searchKeyword) {
-      const lowerKey = searchKeyword.toLowerCase();
+      const normalizedKey = normalizeText(searchKeyword);
       list = list.filter(track => 
-        (track.name && track.name.toLowerCase().includes(lowerKey)) ||
-        (track.artist && track.artist.toLowerCase().includes(lowerKey)) ||
-        (track.originalName && track.originalName.toLowerCase().includes(lowerKey))
+        normalizeText(track.name).includes(normalizedKey) ||
+        normalizeText(track.artist).includes(normalizedKey) ||
+        normalizeText(track.originalName).includes(normalizedKey)
       );
     }
     

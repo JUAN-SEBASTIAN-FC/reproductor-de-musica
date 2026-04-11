@@ -35,6 +35,7 @@ export const NowPlayingPanel = () => {
     const file = e.target.files[0];
     if (file && currentTrack) {
       updateTrackImage(currentTrack.id, file);
+      e.target.value = ''; // Reset to allow same file selection
     }
   };
 
@@ -46,34 +47,41 @@ export const NowPlayingPanel = () => {
       <div className={`now-playing-view ${isVideo ? 'is-video' : ''}`}>
         <div className={`media-container ${isVideo ? 'is-video' : ''}`}>
           {/* Placeholder o Imagen cargada */}
-          {!isVideo && (
-            <div className="media-placeholder">
-              {currentTrack?.imageUrl ? (
-                <img src={currentTrack.imageUrl} alt="Cover" className="cover-image" />
-              ) : (
-                <span>{currentTrack ? currentTrack.name.charAt(0).toUpperCase() : '?'}</span>
-              )}
-              
-              {currentTrack && (
-                <>
-                  <input 
-                    type="file" 
-                    accept="image/*" 
-                    ref={imageInputRef} 
-                    style={{ display: 'none' }} 
-                    onChange={handleImageUpload}
-                  />
-                  <button 
-                    className="upload-cover-btn"
-                    onClick={() => imageInputRef.current?.click()}
-                  >
-                    <ImageIcon size={14} color="#fff" />
-                    Cambiar Portada
-                  </button>
-                </>
-              )}
-            </div>
-          )}
+          <div className={`media-placeholder ${isVideo && !currentTrack?.imageUrl ? 'hidden' : ''}`}>
+            {currentTrack?.imageUrl ? (
+              <img 
+                key={currentTrack.imageUrl} 
+                src={currentTrack.imageUrl} 
+                alt="Cover" 
+                className="cover-image" 
+              />
+            ) : (
+              <span>{currentTrack ? currentTrack.name.charAt(0).toUpperCase() : '?'}</span>
+            )}
+            
+            {/* Solo permitimos cambiar portada si NO es video */}
+            {currentTrack && !isVideo && (
+              <>
+                <input 
+                  type="file" 
+                  accept="image/*" 
+                  ref={imageInputRef} 
+                  style={{ display: 'none' }} 
+                  onChange={handleImageUpload}
+                />
+                <button 
+                  className="upload-cover-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    imageInputRef.current?.click();
+                  }}
+                >
+                  <ImageIcon size={14} color="#fff" />
+                  Cambiar Portada
+                </button>
+              </>
+            )}
+          </div>
           
           {/* Mount para inyectar `<video>` global */}
           <div 

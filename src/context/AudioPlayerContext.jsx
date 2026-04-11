@@ -28,8 +28,9 @@ export const AudioPlayerProvider = ({ children }) => {
     const vid = document.createElement('video');
     vid.playsInline = true;
     vid.style.width = '100%';
-    vid.style.height = '100%';
-    vid.style.objectFit = 'cover';
+    vid.style.height = 'auto';
+    vid.style.maxHeight = '100%';
+    vid.style.objectFit = 'contain';
     vid.style.borderRadius = '12px';
     audioRef.current = vid;
   }
@@ -285,7 +286,8 @@ export const AudioPlayerProvider = ({ children }) => {
     toggleRepeat,
     seek,
     toggleFavorite,
-    removeFromLibrary
+    removeFromLibrary,
+    updateTrackImage
   };
 
   return (
