@@ -13,7 +13,7 @@ Aura Stream es un reproductor de música moderno, minimalista y ligero, diseñad
 - **❤️ Lista de Favoritos**: Marca tus canciones preferidas para acceder a ellas fácilmente.
 - **🔍 Búsqueda Dinámica**: Encuentra tus pistas rápidamente por título o artista.
 - **🎵 Controles Intuitivos**: Panel de reproducción completo con barra de progreso, control de volumen y navegación entre pistas.
-- **🔐 Acceso Simulado**: Sistema de login integrado para una experiencia personalizada.
+
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -47,7 +47,7 @@ Sigue estos pasos para ejecutar el proyecto localmente:
 
 ## 📖 Guía de Uso
 
-1. **Inicio de Sesión**: Introduce cualquier nombre de usuario para entrar a la plataforma.
+
 2. **Subir Música**: En la pantalla de inicio, arrastra tus archivos o haz clic en la zona de subida.
 3. **Navegación**: Utiliza el menú lateral para moverte entre el Reproductor, Inicio, Biblioteca y Favoritos.
 4. **Temas**: Cambia entre el modo oscuro y claro usando el icono de sol/luna en la cabecera.
