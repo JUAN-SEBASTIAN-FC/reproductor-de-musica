@@ -1,5 +1,7 @@
 # 🎧 Aura Stream
 
+[![Aura Stream Preview](./preview.png)](https://juan-sebastian-fc.github.io/reproductor-de-musica/)
+
 Aura Stream es un reproductor de música moderno, minimalista y ligero, diseñado para ofrecer una experiencia auditiva fluida y estéticamente agradable directamente en tu navegador.
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
