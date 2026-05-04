@@ -1,12 +1,10 @@
 # 🎧 Aura Stream
 
-<p align="center">
-  <h2>
-    <a href="https://juan-sebastian-fc.github.io/reproductor-de-musica/">
-      🔗 https://juan-sebastian-fc.github.io/reproductor-de-musica/
-    </a>
-  </h2>
-</p>
+<h2 align="center">
+  <a href="https://juan-sebastian-fc.github.io/reproductor-de-musica/">
+    🔗 https://juan-sebastian-fc.github.io/reproductor-de-musica/
+  </a>
+</h2>
 
 Aura Stream es un reproductor de música moderno, minimalista y ligero, diseñado para ofrecer una experiencia auditiva fluida y estéticamente agradable directamente en tu navegador.
 
